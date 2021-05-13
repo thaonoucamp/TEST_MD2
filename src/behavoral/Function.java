@@ -17,7 +17,8 @@ public class Function {
     transient Scanner sc = new Scanner(System.in);
 
     public Function() throws IOException {
-        this.listContacts = fileCSV.swapFileCSV(fileCSV.reader(fileCSV.FILE_PATH));
+        this.listContacts = fileCSV.swapFileCSV(fileCSV.reader(fileCSV.FILE_PATH)) == null ?
+                new ArrayList<>() : fileCSV.swapFileCSV(fileCSV.reader(fileCSV.FILE_PATH));
     }
 
     public Contact input() {
@@ -62,7 +63,7 @@ public class Function {
         String telephone = sc.nextLine();
 
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).equals(telephone)) {
+            if (list.get(i).getTelephone().equals(telephone)) {
                 list.set(i, input());
             }
         }
@@ -77,10 +78,11 @@ public class Function {
         String telephone = sc.nextLine();
 
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).equals(telephone)) {
+            if (list.get(i).getTelephone().equals(telephone)) {
                 list.remove(list.get(i));
             }
         }
+        show(list);
         fileCSV.writer(list, fileCSV.FILE_PATH);
     }
 
